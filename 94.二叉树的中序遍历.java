@@ -1,9 +1,9 @@
-import java.util.*;
+import java.util.List;
 
 /*
- * @lc app=leetcode.cn id=102 lang=java
+ * @lc app=leetcode.cn id=94 lang=java
  *
- * [102] 二叉树的层序遍历
+ * [94] 二叉树的中序遍历
  */
 
 // @lc code=start
@@ -24,33 +24,25 @@ import java.util.*;
  */
 /**
  * 思路
- * BFS模板
+ * 递归
  */
 class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
         if (root == null) {
             return result;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            List<Integer> list = new ArrayList<>();
-            int size = queue.size();
-            while (size > 0) {
-                TreeNode node = queue.poll();
-                size--;
-                list.add(node.val);
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-            }
-            result.add(list);
-        }
+        inorder(root, result);
         return result;
+    }
+
+    private void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, list);
+        list.add(root.val);
+        inorder(root.right, list);
     }
 }
 
